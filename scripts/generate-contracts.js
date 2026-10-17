@@ -210,7 +210,22 @@ const openapi = {
     '/reports/portfolio': { get: { summary: 'Get overall portfolio health summary', tags: ['Reports'] } },
     '/reports/par': { get: { summary: 'Get Portfolio at Risk aging buckets', tags: ['Reports'] } },
     '/reports/route-performance': { get: { summary: 'Get route recovery performance', tags: ['Reports'] } },
-    '/cron/run-overdue': { post: { summary: 'Trigger daily overdue scan and penalty accrual', tags: ['Cron'] } }
+    '/cron/run-overdue': { post: { summary: 'Trigger daily overdue scan and penalty accrual', tags: ['Cron'] } },
+
+    // Routes, Notices, Notifications, PDF, Backup & Dashboard
+    '/routes': {
+      get: { summary: 'List all field collection routes', tags: ['Routes'] },
+      post: { summary: 'Create a new field collection route', tags: ['Routes'] }
+    },
+    '/routes/{id}/assign': { put: { summary: 'Assign a salesperson to a route', tags: ['Routes'] } },
+    '/notices/generate': { post: { summary: 'Generate and serve legal overdue recovery notice', tags: ['Notices'] } },
+    '/notices': { get: { summary: 'List generated legal recovery notices', tags: ['Notices'] } },
+    '/notifications/push': { post: { summary: 'Dispatch FCM push notification to agent device', tags: ['Notifications'] } },
+    '/pdf/receipt/{receiptNo}': { get: { summary: 'Stream printable HTML / PDF receipt', tags: ['PDF'] } },
+    '/backup/run': { post: { summary: 'Execute manual database backup archive', tags: ['Backup'] } },
+    '/backup/status': { get: { summary: 'Get backup health and retention status', tags: ['Backup'] } },
+    '/dashboard/portfolio': { get: { summary: 'Company-wide active loan portfolio and metrics', tags: ['Dashboard'] } },
+    '/dashboard/own': { get: { summary: "Field agent's personal summary and daily performance", tags: ['Dashboard'] } }
   },
   components: {
     securitySchemes: {

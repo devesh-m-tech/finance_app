@@ -13,7 +13,7 @@ import { BranchesModule } from './modules/branches/branches.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 
-// Dynamic Engine Modules (Phase 2)
+// Dynamic Engine Modules
 import { WorkflowsModule } from './modules/workflows/workflows.module';
 import { FormsModule } from './modules/forms/forms.module';
 import { ChecklistsModule } from './modules/checklists/checklists.module';
@@ -22,7 +22,8 @@ import { SettingsModule } from './modules/settings/settings.module';
 import { FeatureFlagsModule } from './modules/feature-flags/feature-flags.module';
 import { RealtimeModule } from './modules/realtime/realtime.module';
 
-// Business & Operations Modules (Phase 3-8)
+// Business & Operations Modules
+import { RoutesModule } from './modules/routes/routes.module';
 import { FilesModule } from './modules/files/files.module';
 import { CustomersModule } from './modules/customers/customers.module';
 import { LoansModule } from './modules/loans/loans.module';
@@ -35,8 +36,13 @@ import { IntegrationsModule } from './integrations/integrations.module';
 import { CreditModule } from './modules/credit/credit.module';
 import { KycModule } from './modules/kyc/kyc.module';
 import { FingerprintsModule } from './modules/fingerprints/fingerprints.module';
+import { NoticesModule } from './modules/notices/notices.module';
 import { MessagesModule } from './modules/messages/messages.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
+import { PdfModule } from './modules/pdf/pdf.module';
 import { CronModule } from './modules/cron/cron.module';
+import { BackupModule } from './modules/backup/backup.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 import { ExpensesModule } from './modules/expenses/expenses.module';
 import { PnlModule } from './modules/pnl/pnl.module';
 import { ReportsModule } from './modules/reports/reports.module';
@@ -68,6 +74,7 @@ import { AuditInterceptor } from './common/interceptors/audit.interceptor';
     SettingsModule,
     FeatureFlagsModule,
     RealtimeModule,
+    RoutesModule,
     FilesModule,
     CustomersModule,
     LoansModule,
@@ -80,8 +87,13 @@ import { AuditInterceptor } from './common/interceptors/audit.interceptor';
     CreditModule,
     KycModule,
     FingerprintsModule,
+    NoticesModule,
     MessagesModule,
+    NotificationsModule,
+    PdfModule,
     CronModule,
+    BackupModule,
+    DashboardModule,
     ExpensesModule,
     PnlModule,
     ReportsModule,
