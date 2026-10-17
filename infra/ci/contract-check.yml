@@ -1,0 +1,29 @@
+name: API Contract Drift Verification
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  contract-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Backend & Export Contract
+        working-directory: backend
+        run: |
+          npm ci
+          npm run export:contract
+
+      - name: Verify Contract Drift
+        run: |
+          diff backend/contract/openapi.json frontend/shared/generated/openapi.json || (echo "ERROR: Frontend OpenAPI contract is out of sync with backend! Run 'npm run sync:contract' in frontend/" && exit 1)
+          diff backend/contract/permissions.json frontend/shared/generated/permissions.json || (echo "ERROR: Frontend Permissions catalog is out of sync with backend! Run 'npm run sync:contract' in frontend/" && exit 1)

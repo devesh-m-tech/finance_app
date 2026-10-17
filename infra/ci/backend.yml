@@ -1,0 +1,54 @@
+name: Backend CI
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend.yml'
+  pull_request:
+    paths:
+      - 'backend/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:7.0
+        ports:
+          - 27017:27017
+        options: --replSet rs0
+      redis:
+        image: redis:7.2-alpine
+        ports:
+          - 6379:6379
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Lint and Typecheck
+        working-directory: backend
+        run: |
+          npm run lint
+          npx tsc --noEmit
+
+      - name: Run Unit and RBAC Tests
+        working-directory: backend
+        env:
+          MONGODB_URI: mongodb://localhost:27017/test?replicaSet=rs0
+          JWT_ACCESS_SECRET: test_secret_key_32_characters_long_min
+          JWT_REFRESH_SECRET: test_refresh_key_32_characters_long
+          ENCRYPTION_KEY: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+        run: npm test

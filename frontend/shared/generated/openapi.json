@@ -1,0 +1,542 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Shri Amudha Small Finance - LMS API",
+    "description": "Enterprise Micro-Finance & Collateral Lending LMS API Contract",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "summary": "Login with username & password",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/pin-login": {
+      "post": {
+        "summary": "Fast field login with 4-digit PIN",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "summary": "Refresh JWT access token",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/me/permissions": {
+      "get": {
+        "summary": "Get current user permissions & restrictions",
+        "tags": [
+          "Permissions"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "List users",
+        "tags": [
+          "Users"
+        ]
+      },
+      "post": {
+        "summary": "Create user",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/restrictions/{managerId}": {
+      "get": {
+        "summary": "Get active restrictions",
+        "tags": [
+          "Restrictions"
+        ]
+      },
+      "put": {
+        "summary": "Set restrictions",
+        "tags": [
+          "Restrictions"
+        ]
+      },
+      "delete": {
+        "summary": "Remove restrictions",
+        "tags": [
+          "Restrictions"
+        ]
+      }
+    },
+    "/branches": {
+      "get": {
+        "summary": "List branches",
+        "tags": [
+          "Branches"
+        ]
+      },
+      "post": {
+        "summary": "Create branch",
+        "tags": [
+          "Branches"
+        ]
+      }
+    },
+    "/workflows/definitions": {
+      "get": {
+        "summary": "List workflow definitions",
+        "tags": [
+          "Workflows"
+        ]
+      }
+    },
+    "/workflows/{entityType}/{entityId}/transitions": {
+      "get": {
+        "summary": "Allowed transitions",
+        "tags": [
+          "Workflows"
+        ]
+      }
+    },
+    "/workflows/{entityType}/{entityId}/transition": {
+      "post": {
+        "summary": "Execute transition",
+        "tags": [
+          "Workflows"
+        ]
+      }
+    },
+    "/forms/{formKey}": {
+      "get": {
+        "summary": "Get dynamic form schema",
+        "tags": [
+          "Forms"
+        ]
+      },
+      "put": {
+        "summary": "Save dynamic form schema",
+        "tags": [
+          "Forms"
+        ]
+      }
+    },
+    "/checklists": {
+      "get": {
+        "summary": "Get checklist templates",
+        "tags": [
+          "Checklists"
+        ]
+      }
+    },
+    "/checklists/{loanType}": {
+      "get": {
+        "summary": "Get checklist by loan type",
+        "tags": [
+          "Checklists"
+        ]
+      }
+    },
+    "/masters/rates/latest": {
+      "get": {
+        "summary": "Get latest metal bullion rates",
+        "tags": [
+          "Masters"
+        ]
+      }
+    },
+    "/masters/rates": {
+      "post": {
+        "summary": "Publish daily metal rate",
+        "tags": [
+          "Masters"
+        ]
+      }
+    },
+    "/masters/{category}": {
+      "get": {
+        "summary": "Get master items by category",
+        "tags": [
+          "Masters"
+        ]
+      }
+    },
+    "/settings/branding": {
+      "get": {
+        "summary": "Get branding tokens",
+        "tags": [
+          "Settings"
+        ]
+      }
+    },
+    "/feature-flags": {
+      "get": {
+        "summary": "List feature flags",
+        "tags": [
+          "FeatureFlags"
+        ]
+      }
+    },
+    "/realtime/stream": {
+      "get": {
+        "summary": "SSE event stream",
+        "tags": [
+          "Realtime"
+        ]
+      }
+    },
+    "/customers": {
+      "get": {
+        "summary": "List customers with pagination & search",
+        "tags": [
+          "Customers"
+        ]
+      },
+      "post": {
+        "summary": "Onboard new customer application",
+        "tags": [
+          "Customers"
+        ]
+      }
+    },
+    "/customers/verification-queue": {
+      "get": {
+        "summary": "Get pending customer verification queue",
+        "tags": [
+          "Customers"
+        ]
+      }
+    },
+    "/customers/{id}": {
+      "get": {
+        "summary": "Get customer profile",
+        "tags": [
+          "Customers"
+        ]
+      }
+    },
+    "/customers/{id}/verify": {
+      "post": {
+        "summary": "Approve or reject customer verification",
+        "tags": [
+          "Customers"
+        ]
+      }
+    },
+    "/customers/{id}/documents": {
+      "post": {
+        "summary": "Attach document/photo to customer",
+        "tags": [
+          "Customers"
+        ]
+      }
+    },
+    "/customers/{id}/documents/{docType}/verify": {
+      "post": {
+        "summary": "Verify or reject document",
+        "tags": [
+          "Customers"
+        ]
+      }
+    },
+    "/credit/cibil": {
+      "post": {
+        "summary": "Pull CIBIL credit score and report",
+        "tags": [
+          "Credit"
+        ]
+      }
+    },
+    "/kyc/verify-pan": {
+      "post": {
+        "summary": "Verify PAN format and registry match",
+        "tags": [
+          "KYC"
+        ]
+      }
+    },
+    "/kyc/verify-aadhaar": {
+      "post": {
+        "summary": "Verify Aadhaar Verhoeff checksum and e-KYC",
+        "tags": [
+          "KYC"
+        ]
+      }
+    },
+    "/fingerprints/verify": {
+      "post": {
+        "summary": "Verify live biometric capture with ISO template",
+        "tags": [
+          "Fingerprints"
+        ]
+      }
+    },
+    "/loans/preview": {
+      "post": {
+        "summary": "Calculate repayment preview and schedule",
+        "tags": [
+          "Loans"
+        ]
+      }
+    },
+    "/loans": {
+      "get": {
+        "summary": "List loans directory",
+        "tags": [
+          "Loans"
+        ]
+      },
+      "post": {
+        "summary": "Create loan application (Daily, Weekly, Monthly, Vehicle, Metal)",
+        "tags": [
+          "Loans"
+        ]
+      }
+    },
+    "/loans/{id}": {
+      "get": {
+        "summary": "Get full loan details and schedule",
+        "tags": [
+          "Loans"
+        ]
+      }
+    },
+    "/loans/{id}/approve": {
+      "post": {
+        "summary": "Approve loan (Maker-Checker enforced)",
+        "tags": [
+          "Loans"
+        ]
+      }
+    },
+    "/loans/{id}/disburse": {
+      "post": {
+        "summary": "Disburse approved loan",
+        "tags": [
+          "Loans"
+        ]
+      }
+    },
+    "/payments": {
+      "get": {
+        "summary": "List payment collection transactions",
+        "tags": [
+          "Payments"
+        ]
+      },
+      "post": {
+        "summary": "Record payment collection (ACID Waterfall)",
+        "tags": [
+          "Payments"
+        ]
+      }
+    },
+    "/payments/{id}": {
+      "get": {
+        "summary": "Get payment details",
+        "tags": [
+          "Payments"
+        ]
+      }
+    },
+    "/receipts": {
+      "get": {
+        "summary": "List payment receipts",
+        "tags": [
+          "Receipts"
+        ]
+      }
+    },
+    "/receipts/{id}": {
+      "get": {
+        "summary": "Get receipt details",
+        "tags": [
+          "Receipts"
+        ]
+      }
+    },
+    "/receipts/{id}/print": {
+      "get": {
+        "summary": "Get 58mm ESC/POS print payload and text",
+        "tags": [
+          "Receipts"
+        ]
+      }
+    },
+    "/receipts/{id}/cancel": {
+      "post": {
+        "summary": "Cancel receipt",
+        "tags": [
+          "Receipts"
+        ]
+      }
+    },
+    "/collections/visit": {
+      "post": {
+        "summary": "Record field GPS visit (PTP, absent, locked)",
+        "tags": [
+          "Collections"
+        ]
+      }
+    },
+    "/collections/sheet": {
+      "get": {
+        "summary": "Get daily collection route sheet",
+        "tags": [
+          "Collections"
+        ]
+      }
+    },
+    "/collections/visits": {
+      "get": {
+        "summary": "List collection visits",
+        "tags": [
+          "Collections"
+        ]
+      }
+    },
+    "/handover/summary": {
+      "get": {
+        "summary": "Get today cash/UPI collection totals",
+        "tags": [
+          "Handover"
+        ]
+      }
+    },
+    "/handover/submit": {
+      "post": {
+        "summary": "Submit end-of-day cash handover with denominations",
+        "tags": [
+          "Handover"
+        ]
+      }
+    },
+    "/handover": {
+      "get": {
+        "summary": "List handovers for manager verification",
+        "tags": [
+          "Handover"
+        ]
+      }
+    },
+    "/handover/{id}/accept": {
+      "post": {
+        "summary": "Accept and verify cash handover",
+        "tags": [
+          "Handover"
+        ]
+      }
+    },
+    "/sync/pull": {
+      "get": {
+        "summary": "Pull delta updates since timestamp",
+        "tags": [
+          "Sync"
+        ]
+      }
+    },
+    "/sync/push": {
+      "post": {
+        "summary": "Batch push offline collection payments and visits",
+        "tags": [
+          "Sync"
+        ]
+      }
+    },
+    "/messages/sms": {
+      "post": {
+        "summary": "Send SMS transaction notification",
+        "tags": [
+          "Messages"
+        ]
+      }
+    },
+    "/messages/whatsapp": {
+      "post": {
+        "summary": "Send WhatsApp receipt payload",
+        "tags": [
+          "Messages"
+        ]
+      }
+    },
+    "/expenses": {
+      "get": {
+        "summary": "List branch operational expenses",
+        "tags": [
+          "Expenses"
+        ]
+      },
+      "post": {
+        "summary": "Record branch operational expense",
+        "tags": [
+          "Expenses"
+        ]
+      }
+    },
+    "/expenses/{id}": {
+      "get": {
+        "summary": "Get expense voucher",
+        "tags": [
+          "Expenses"
+        ]
+      }
+    },
+    "/pnl": {
+      "get": {
+        "summary": "Get Profit & Loss statement",
+        "tags": [
+          "P&L"
+        ]
+      }
+    },
+    "/reports/portfolio": {
+      "get": {
+        "summary": "Get overall portfolio health summary",
+        "tags": [
+          "Reports"
+        ]
+      }
+    },
+    "/reports/par": {
+      "get": {
+        "summary": "Get Portfolio at Risk aging buckets",
+        "tags": [
+          "Reports"
+        ]
+      }
+    },
+    "/reports/route-performance": {
+      "get": {
+        "summary": "Get route recovery performance",
+        "tags": [
+          "Reports"
+        ]
+      }
+    },
+    "/cron/run-overdue": {
+      "post": {
+        "summary": "Trigger daily overdue scan and penalty accrual",
+        "tags": [
+          "Cron"
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

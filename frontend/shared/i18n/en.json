@@ -1,0 +1,61 @@
+{
+  "app": {
+    "name": "SHRI AMUDHA SMALL FINANCE",
+    "tagline": "Trusted Loan Management System",
+    "noAccessTitle": "Access Restricted",
+    "noAccessDesc": "You do not possess the required permission to access this module.",
+    "contactManager": "Please contact your Super Admin for authorization."
+  },
+  "roles": {
+    "SUPER_ADMIN": "Super Admin (Owner)",
+    "MANAGER": "Branch Manager",
+    "SALESPERSON": "Field Collection Agent"
+  },
+  "nav": {
+    "home": "Home",
+    "customers": "Customers",
+    "loans": "Loans",
+    "collections": "Collections",
+    "receipts": "Receipts",
+    "reports": "Reports",
+    "pnl": "Profit & Loss",
+    "expenses": "Expenses",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "salesperson": {
+    "addCustomer": "Add Customer",
+    "collectCash": "Collect Cash",
+    "collectedToday": "Collected Today",
+    "todayTarget": "Today's Target",
+    "customersAdded": "Customers Added",
+    "assignedDue": "Assigned Customers Due",
+    "submitHandover": "Submit Cash Handover"
+  },
+  "loanTypes": {
+    "daily": "Daily Collection Loan",
+    "weekly": "Weekly Micro Loan",
+    "monthly": "Monthly EMI Loan",
+    "two_wheeler": "Two Wheeler Loan",
+    "four_wheeler": "Four Wheeler Loan",
+    "metal": "Gold & Silver Loan"
+  },
+  "actions": {
+    "save": "Save",
+    "submit": "Submit Application",
+    "approve": "Approve",
+    "disburse": "Disburse Funds",
+    "reject": "Reject",
+    "cancel": "Cancel",
+    "printReceipt": "Print Thermal Receipt",
+    "shareWhatsApp": "Share via WhatsApp",
+    "confirm": "Confirm & Proceed",
+    "retry": "Try Again"
+  },
+  "cibil": {
+    "score": "CIBIL Score",
+    "excellent": "Excellent (750+)",
+    "good": "Good (650-749)",
+    "poor": "Needs Review (<650)"
+  }
+}

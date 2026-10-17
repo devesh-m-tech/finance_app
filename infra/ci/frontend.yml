@@ -1,0 +1,48 @@
+name: Frontend CI
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+  pull_request:
+    paths:
+      - 'frontend/**'
+
+jobs:
+  test-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Root Frontend Dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Lint and Build Web Admin
+        working-directory: frontend
+        run: |
+          npm run lint:web
+          npm run build:web
+
+  test-mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Mobile Dependencies
+        working-directory: frontend/mobile
+        run: npm ci
+
+      - name: Typecheck Mobile App
+        working-directory: frontend/mobile
+        run: npx tsc --noEmit

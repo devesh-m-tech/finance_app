@@ -1,0 +1,142 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: shri_amudha_mongo
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./infra/mongo/init-replica.sh:/scripts/init-replica.sh:ro
+      - ./infra/mongo/mongod.conf:/etc/mongod.conf:ro
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "rs.status().ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - finance_net
+
+  mongo_init:
+    image: mongo:7.0
+    container_name: shri_amudha_mongo_init
+    depends_on:
+      mongodb:
+        condition: service_started
+    volumes:
+      - ./infra/mongo/init-replica.sh:/scripts/init-replica.sh:ro
+    entrypoint: [ "bash", "/scripts/init-replica.sh" ]
+    networks:
+      - finance_net
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: shri_amudha_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - finance_net
+
+  minio:
+    image: minio/minio:RELEASE.2024-01-31T20-20-33Z
+    container_name: shri_amudha_minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadminpassword
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - finance_net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: shri_amudha_backend
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      PORT: 4000
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongodb:27017/shri_amudha_finance?replicaSet=rs0
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_ACCESS_SECRET: default_jwt_secret_change_in_production_32chars
+      JWT_REFRESH_SECRET: default_refresh_secret_change_in_production_32
+      ENCRYPTION_KEY: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+      S3_ENDPOINT: minio
+      S3_PORT: 9000
+      S3_USE_SSL: "false"
+      S3_ACCESS_KEY: minioadmin
+      S3_SECRET_KEY: minioadminpassword
+      S3_BUCKET: shri-amudha-documents
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      minio:
+        condition: service_started
+    networks:
+      - finance_net
+
+  frontend_web:
+    build:
+      context: ./frontend
+      dockerfile: ./web/Dockerfile
+    container_name: shri_amudha_web
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - finance_net
+
+  nginx:
+    build:
+      context: ./infra/nginx
+      dockerfile: Dockerfile
+    container_name: shri_amudha_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+      - frontend_web
+    networks:
+      - finance_net
+
+  mongo-express:
+    image: mongo-express:1.0.2-alpha.4
+    container_name: shri_amudha_mongo_express
+    profiles: ["dev"]
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017/?replicaSet=rs0
+      ME_CONFIG_BASICAUTH: "false"
+    depends_on:
+      - mongodb
+    networks:
+      - finance_net
+
+volumes:
+  mongo_data:
+  redis_data:
+  minio_data:
+
+networks:
+  finance_net:
+    driver: bridge

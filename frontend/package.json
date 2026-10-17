@@ -1,0 +1,24 @@
+{
+  "name": "shri-amudha-frontend-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "mobile",
+    "web"
+  ],
+  "scripts": {
+    "dev:mobile": "npm run --workspace=mobile start",
+    "dev:web": "npm run --workspace=web dev",
+    "build:web": "npm run --workspace=web build",
+    "lint": "npm run lint:shared && npm run lint:mobile && npm run lint:web",
+    "lint:shared": "tsc -p shared/tsconfig.json --noEmit",
+    "lint:mobile": "npm run --workspace=mobile lint",
+    "lint:web": "npm run --workspace=web lint",
+    "sync:contract": "node ./scripts/sync-contract.js",
+    "test": "npm run test:shared && npm run --workspace=web test"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
